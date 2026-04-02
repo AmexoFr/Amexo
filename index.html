@@ -452,6 +452,14 @@ footer{padding:24px 0;text-align:center;border-top:1px solid var(--border);margi
       </div>
     </div>
     <div class="parr-warn">⚠️ Conditions Amex : le parrainage est réservé à tes proches/famille/collègues. Amex peut annuler les bonus si le lien est diffusé publiquement à des audiences non ciblées. Partage uniquement en privé.</div>
+    <div id="parr-highlight" style="padding:12px 16px;background:rgba(34,197,94,0.06);border-top:1px solid rgba(34,197,94,0.15)">
+      <div style="font-size:12px;color:#22C55E;font-weight:700;line-height:1.7">Bonus actuels (jusqu'au 8 juin 2026) :</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.6);line-height:1.7;margin-top:4px">
+        → Air France : <strong style="color:#FFD700">25 000 miles/filleul</strong> + 40 000 si upgrade Plat = jusqu'à <strong style="color:#22C55E">120 000 miles pour 2 filleuls</strong><br>
+        → Amex : <strong style="color:#A78BFA">180 000 pts MR</strong> soit <strong style="color:#22C55E">144 000 miles</strong> (ratio 5:4) pour les filleuls<br>
+        → Combiné : assez pour un <strong style="color:#fff">A/R Business Tokyo + A/R Business New York</strong>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -657,14 +665,12 @@ footer{padding:24px 0;text-align:center;border-top:1px solid var(--border);margi
   <!-- FINAL CTA -->
   <div class="final-cta">
     <div class="fc-title">Passe à l'action maintenant</div>
-    <p class="fc-sub">L'offre parrainage avec <strong style="color:#FFD700">25 000 miles</strong> de bienvenue + <strong style="color:#FFD700">40 000 miles si upgrade Platinum</strong> expire le 8 juin 2026.<br>Soit <strong style="color:#22C55E">120 000 miles pour 2 filleuls</strong> côté Air France et <strong style="color:#22C55E">144 000 miles pour les filleuls Amex</strong>.</p>
+    <p class="fc-sub">Souscris les deux cartes Gold (0 € chacune), puis upgrade vers Platinum pour maximiser tes bonus. Tu cumules les miles des deux cartes sans rien payer la 1ère année.</p>
     <div class="fc-btns">
-      <a href="https://americanexpress.com" class="fcbtn fcbtn-m" target="_blank">Gold Air France — 0 € an 1 · 25 000 miles + 40 000 si upgrade Plat</a>
-      <a href="https://americanexpress.com" class="fcbtn fcbtn-s" target="_blank">Gold Amex — 0 € an 1 · 80 000 pts MR si upgrade Plat</a>
+      <a href="https://americanexpress.com" class="fcbtn fcbtn-m" target="_blank">1. Gold Air France — 0 € an 1 · 25 000 miles → Upgrade Plat +40 000 miles</a>
+      <a href="https://americanexpress.com" class="fcbtn fcbtn-s" target="_blank">2. Gold Amex — 0 € an 1 → Upgrade Plat +80 000 pts MR (= 64 000 miles)</a>
     </div>
-    <p class="fc-warn">Offre valable jusqu'au 8 juin 2026 uniquement — Après : bonus réduits ou supprimés</p>
-  </div>
-    <p class="fc-warn">⚠️ Offre valable jusqu'au 8 juin 2026 uniquement</p>
+    <p class="fc-warn">Offre parrainage valable jusqu'au 8 juin 2026 — Après : bonus réduits ou supprimés</p>
   </div>
 
 </div><!-- /results -->
@@ -1077,7 +1083,7 @@ function buildVerdict(totalMois,totalFB,milesMois,milesAF,gamToFB,pamToFB,parrFB
   if(hero){
     var isBiz=hero.canBiz||hero.canUpgrade;
     var milesUsed=isBiz?(hero.milesBiz||hero.milesEco):hero.milesEco;
-    var cashSaved=isBiz?hero.cashBiz:hero.cashEco;
+    var cashSaved=isBiz?(hero.cashBiz||hero.cashEco):hero.cashEco;
     var bg=isBiz?'linear-gradient(135deg,rgba(167,139,250,0.2),rgba(30,144,255,0.12))':'linear-gradient(135deg,rgba(30,144,255,0.18),rgba(34,197,94,0.08))';
     var border=isBiz?'rgba(167,139,250,0.45)':'rgba(30,144,255,0.4)';
     var label=isBiz?twimg('sparkle')+' Classe Business disponible':twimg('target')+' Destination accessible';
@@ -1110,13 +1116,13 @@ function buildVerdict(totalMois,totalFB,milesMois,milesAF,gamToFB,pamToFB,parrFB
 
   var toShow=accessible.concat(soon).slice(0,6);
   toShow.forEach(function(d){
-    var isBiz=d.canBiz||d.canUpgrade;
+    var isBiz=(d.canBiz&&d.milesBiz)||d.canUpgrade;
     var bg=d.accessible?(isBiz?'rgba(167,139,250,0.1)':d.promo?'rgba(255,215,0,0.08)':'rgba(34,197,94,0.07)'):'rgba(245,158,11,0.07)';
     var border=d.accessible?(isBiz?'rgba(167,139,250,0.3)':'rgba(34,197,94,0.2)'):'rgba(245,158,11,0.25)';
     var st=d.accessible?(isBiz?'Business \u2714':'Eco \u2714'):'~'+Math.min(d.moisEco||99,d.moisBiz||99)+' mois';
     var stColor=d.accessible?(isBiz?'#A78BFA':'#22C55E'):'#F59E0B';
-    var milesShow=isBiz?d.milesBiz:d.milesEco;
-    var cashShow=isBiz?d.cashBiz:d.cashEco;
+    var milesShow=isBiz?(d.milesBiz||d.milesEco):d.milesEco;
+    var cashShow=isBiz?(d.cashBiz||d.cashEco):d.cashEco;
     destGridHtml+='<div style="background:'+bg+';border:1px solid '+border+';border-radius:10px;padding:10px 12px">'
       +(d.promo?'<div style="font-size:9px;background:rgba(255,215,0,0.2);color:#FFD700;border-radius:4px;padding:1px 6px;display:inline-block;margin-bottom:4px;font-weight:700">PROMO -25%</div>':'')
       +(isBiz&&!d.promo?'<div style="font-size:9px;background:rgba(167,139,250,0.2);color:#A78BFA;border-radius:4px;padding:1px 6px;display:inline-block;margin-bottom:4px;font-weight:700">BUSINESS</div>':'')
@@ -1166,9 +1172,32 @@ function buildVerdict(totalMois,totalFB,milesMois,milesAF,gamToFB,pamToFB,parrFB
   // ─── Texte verdict selon profil RÉEL ───
   var vtxt='';
   var vsteps=[];
-  var convNote=(fromMR>0)?'<br><span style="color:#A78BFA">\u2192 Dont '+fm(fromMR)+' miles depuis conversion de tes points MR (ratio 5:4).</span>':'';
-  var parrNote=(fromParr>0)?'<br><span style="color:#22C55E">\u2192 Plus '+fm(fromParr)+' miles bonus parrainage.</span>':'';
-  var roiNote='<br><span style="color:'+(roiNet>=0?'#22C55E':'#F59E0B')+'">\u2192 ROI net sur la periode : '+(roiNet>=0?'+':'')+fme(roiNet)+'.</span>';
+  var convNote=(fromMR>0)?'<br><span style="color:#A78BFA">→ Dont '+fm(fromMR)+' miles depuis conversion de tes points MR (ratio 5:4).</span>':'';
+  var parrNote=(fromParr>0)?'<br><span style="color:#22C55E">→ Plus '+fm(fromParr)+' miles bonus parrainage.</span>':'';
+  var roiNote='<br><span style="color:'+(roiNet>=0?'#22C55E':'#F59E0B')+'">→ ROI net sur la période : '+(roiNet>=0?'+':'')+fme(roiNet)+'.</span>';
+
+  // Détection points MR non convertis pour recommandation
+  var ptsRestants=(cards.gam&&!gamConvert?gamPtsCumul:0)+(cards.pam&&!pamConvert?pamPtsCumul:0);
+  var mrRecoHtml='';
+  if(ptsRestants>0){
+    var milesPotentiels=Math.round(ptsRestants*0.8);
+    var valBizPotentielle=Math.round(milesPotentiels*0.05);
+    mrRecoHtml='<div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);border-radius:12px;padding:14px 16px;margin:12px 0">'
+      +'<div style="font-size:12px;font-weight:700;color:#A78BFA;margin-bottom:8px">'+twimg('star')+' Recommandation : convertis tes '+fm(ptsRestants)+' points MR en miles !</div>'
+      +'<div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.7">'
+      +'Tu as <strong style="color:#fff">'+fm(ptsRestants)+' points MR</strong> non convertis. En les transférant vers Flying Blue (ratio 5:4), tu obtiens <strong style="color:#FFD700">'+fm(milesPotentiels)+' miles supplémentaires</strong>.<br>'
+      +'<br>'
+      +'<strong style="color:#fff">Pourquoi convertir ?</strong><br>'
+      +'→ En cashback : '+fm(ptsRestants)+' pts × 0,012 € = <span style="color:#EF4444;text-decoration:line-through">'+fme(Math.round(ptsRestants*0.012))+'</span><br>'
+      +'→ En miles Economy : '+fm(milesPotentiels)+' miles = <span style="color:#F59E0B">'+fme(Math.round(milesPotentiels*0.015))+'</span> de valeur vol<br>'
+      +'→ En miles Business : '+fm(milesPotentiels)+' miles = <span style="color:#22C55E;font-weight:700">'+fme(valBizPotentielle)+'</span> de valeur Business<br>'
+      +'<br>'
+      +'<span style="color:#22C55E;font-weight:700">→ Convertir en miles Business = '+Math.round(valBizPotentielle/(ptsRestants*0.012))+'× plus de valeur que le cashback.</span><br>'
+      +'<span style="color:#A78BFA">'+twimg('bolt')+' Astuce : attends un bonus transfert +25% (quelques jours par trimestre) pour obtenir '+fm(Math.round(ptsRestants*1.0))+' miles au lieu de '+fm(milesPotentiels)+'.</span>'
+      +'</div>'
+      +'<div style="margin-top:10px;font-size:11px;color:#4AABFF">→ Coche "Oui, convertir" dans la section Gold Amex / Platinum Amex ci-dessus pour voir l\'impact sur ton total.</div>'
+      +'</div>';
+  }
 
   if(profileType==='STARTER'){
     vtxt='Commence avec <strong>'+fm(totalFB)+' miles</strong> (~<strong>'+fme(valEstim)+'</strong>).'+convNote+parrNote+roiNote
@@ -1334,6 +1363,7 @@ function buildVerdict(totalMois,totalFB,milesMois,milesAF,gamToFB,pamToFB,parrFB
     +'</div>'
 
     +'<p class="v-text" style="margin-top:4px">'+vtxt+'</p>'
+    +mrRecoHtml
     +'<div class="v-steps" style="margin-top:14px">'+stepsHtml+'</div>'
     +'</div>';
   if(window.twemoji){twemoji.parse(document.getElementById('verdict-box'),{folder:'svg',ext:'.svg',base:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'});}
