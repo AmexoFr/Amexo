@@ -966,9 +966,12 @@ function calc(){
   buildVerdict(totalMois,totalFB,milesMois,milesAF,gamToFB,pamToFB,parrMiles+parrPtsConv,totalOther,valTotal,S,H,vcourt+vmoyen+vlong,milesCumul,ptsRestantsCalc);
 
   // Speech bubble
+  var milesAn=milesMois*12;
+  var bonusTotal=(S.gaf?25000:0)+(S.paf?40000:0);
+  var mrConvTotal=gamToFB+pamToFB;
   var msgs=[
-    'Avec '+fme(totalMois)+'/mois tu generes ~'+fm(milesMois*12)+' miles/an. En '+H+' an'+(H>1?'s':'')+' c\'est '+fm(totalFB)+' miles Flying Blue total !',
-    fm(totalFB)+' miles = '+Math.floor(totalFB/25000)+' vol(s) New York A/R + '+fm(totalFB%25000)+' miles en reserve',
+    'Avec '+fme(totalMois)+'/mois tu generes '+fm(milesAn)+' miles/an de tes depenses'+(bonusTotal>0?' + '+fm(bonusTotal)+' miles bonus cartes':'')+(mrConvTotal>0?' + '+fm(mrConvTotal)+' miles MR convertis':'')+'. Total : '+fm(totalFB)+' miles Flying Blue en '+H+' an'+(H>1?'s':'')+'  !',
+    fm(totalFB)+' miles = '+Math.floor(totalFB/25000)+' vol(s) New York A/R'+(totalFB%25000>0?' + '+fm(totalFB%25000)+' miles en reserve':'')+'.',
     'Souscrire AVANT le 8 juin = 25 000 miles offerts. Apres cette date : possiblement moitie moins.'
   ];
   document.getElementById('speech-text').textContent=msgs[Math.floor(Math.random()*msgs.length)];
